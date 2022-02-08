@@ -1,0 +1,42 @@
+
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     ns.cc.pt. g43pl04.cc.pt. (	;ns é o servidor primario e o g43pl04 indica o email do administrador (primeiro . é um @)
+                              2         ; Serial
+			 604800         ; Refresh
+			  86400         ; Retry
+			2419200         ; Expire
+			 604800 )       ; Negative Cache TTL
+;
+@       IN      NS      Servidor1.cc.pt.
+@	IN	NS	Golfinho.cc.pt.
+
+ns.cc.pt.	IN	A	10.2.2.1		;definir os DNS primario e secundario (no IP do Serv1 e Golfinho)
+ns2.cc.pt.	IN	A	10.3.3.2
+;
+Servidor1.cc.pt.	IN	A	10.2.2.1	;definir os 3 servidores de dominio
+Servidor2.cc.pt.	IN	A	10.2.2.2
+Servidor3.cc.pt.	IN	A	10.2.2.3
+;
+mail.cc.pt.	IN      CNAME   Servidor2.cc.pt.	;servidor de email principal
+www.cc.pt.      IN      CNAME   Servidor2.cc.pt.	;servidor web
+pop	IN	CNAME	Servidor3.cc.pt.		;servidor pop
+imap	IN	CNAME	Servidor3.cc.pt.		;servidor imap
+;
+g43.cc.pt.	IN	CNAME	Portatil1.cc.pt.	;registar o portatil 1 com alias g43.cc.pt
+;
+Orca.cc.pt.	IN	A	10.3.3.1		;registar Orca, Golfinho e Foca no dominio de nomes
+Foca.cc.pt.	IN	A	10.3.3.3
+Golfinho.cc.pt. IN      A       10.3.3.2
+1	IN	PTR	Orca.cc.pt.			;registar o dominio reverso
+2	IN	PTR	Golfinho.cc.pt.
+3	IN	PTR	Foca.cc.pt.
+
+;
+cc.pt.	IN	MX	50 mail1.cc.pt.		;o 50 indica a prioridade (quanto mais baixo o nº, maior a prioridade)
+cc.pt.	IN	MX	10 mail2.cc.pt.		;O valor do TTL não entra (como por ex o 3251 em: "dig presidencia.pt MX")
+;
+mail1.cc.pt.	IN	A	10.1.1.1	;definir os servidores para os dois servidores de MX
+mail2.cc.pt.	IN	A	10.3.3.1	;neste caso usamos por ex. o Portatil1 e Orca
